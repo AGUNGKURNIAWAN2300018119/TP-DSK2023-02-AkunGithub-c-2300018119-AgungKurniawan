@@ -1,0 +1,111 @@
+.model small
+.data
+jadwal_kuliah db 'Jadwal Kuliah:', 13, 10, '$'
+senin db '1. Senin - DDP', 13, 10, '$'
+selasa db '2. Selasa - Kalkulus', 13, 10, '$'
+rabu db '3. Rabu - DSK', 13, 10, '$'
+kamis db '4. Kamis - Logika', 13, 10, '$'
+jumat db '5. Jumat - MDI', 13, 10, '$'
+sabtu db '6. Sabtu - Quran Hadist', 13, 10, '$'
+pilih_pesan db 'Pilih hari (1-6): $'
+pesan_invalid db 'Pilihan tidak valid!', 13, 10, '$'
+
+.code
+main proc
+mov ax, @data
+mov ds, ax
+
+; Menampilkan judul jadwal kuliah
+lea dx, jadwal_kuliah
+mov ah, 9
+int 21h
+
+; Menampilkan pilihan jadwal kuliah
+lea dx, senin
+mov ah, 9
+int 21h
+
+lea dx, selasa
+mov ah, 9
+int 21h
+
+lea dx, rabu
+mov ah, 9
+int 21h
+
+lea dx, kamis
+mov ah, 9
+int 21h
+
+lea dx, jumat
+mov ah, 9
+int 21h
+
+lea dx, sabtu
+mov ah, 9
+int 21h
+
+; Menampilkan pesan pilihan
+lea dx, pilih_pesan
+mov ah, 9
+int 21h
+
+; Membaca input dari pengguna
+mov ah, 1
+int 21h
+sub al, '0' 
+
+cmp al, 1
+je tampilkan_senin
+cmp al, 2
+je tampilkan_selasa
+cmp al, 3
+je tampilkan_rabu
+cmp al, 4
+je tampilkan_kamis
+cmp al, 5
+je tampilkan_jumat
+cmp al, 6
+je tampilkan_sabtu
+jmp tampilkan_invalid
+
+tampilkan_senin:
+lea dx, senin
+jmp tampilkan_jadwal
+
+tampilkan_selasa:
+lea dx, selasa
+jmp tampilkan_jadwal
+
+tampilkan_rabu:
+lea dx, rabu
+jmp tampilkan_jadwal
+
+tampilkan_kamis:
+lea dx, kamis
+jmp tampilkan_jadwal
+
+tampilkan_jumat:
+lea dx, jumat
+jmp tampilkan_jadwal
+
+tampilkan_sabtu:
+lea dx, sabtu
+jmp tampilkan_jadwal
+
+tampilkan_jadwal:
+mov ah, 9
+int 21h
+jmp selesai
+
+tampilkan_invalid:
+lea dx, pesan_invalid
+mov ah, 9
+int 21h
+
+selesai:
+; Keluar dari program
+mov ah, 4Ch
+int 21h
+main endp
+end main
